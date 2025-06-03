@@ -19,7 +19,7 @@ namespace RedPaperEMS.Application.Features.Events.Commands.UpdateEvent
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateEventCommand request, CancellationToken cancellationToken)
         {
             var eventToUpdate = await _eventRepository.GetByIdAsync(request.EventId);
             if (eventToUpdate == null)
@@ -38,8 +38,6 @@ namespace RedPaperEMS.Application.Features.Events.Commands.UpdateEvent
             _mapper.Map(request, eventToUpdate, typeof(UpdateEventCommand), typeof(Event));
 
             await _eventRepository.UpdateAsync(eventToUpdate);
-
-            return Unit.Value;
         }
     }
 }
